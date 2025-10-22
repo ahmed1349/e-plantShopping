@@ -6,3 +6,4 @@ export default defineConfig({
   base: "/ibm_final_project/e-plantShopping/",
   plugins: [react()],
 })
+
