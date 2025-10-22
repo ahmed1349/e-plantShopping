@@ -319,27 +319,31 @@ function ProductList({ onHomeClick }) {
                                 <h2 className="plant_heading">{category.category}</h2>
                             </div>
                             <div className="product-list">
-                                {category.plants.map((plant, plantIndex) => (
-                                    <div key={plantIndex} className="product-card">
-                                        <img 
-                                            className="product-image" 
-                                            src={plant.image} 
-                                            alt={plant.name}
-                                            onError={(e) => {
-                                                e.target.src = 'https://via.placeholder.com/200x200/4CAF50/FFFFFF?text=Plant+Image';
-                                            }}
-                                        />
-                                        <div className="product-title">{plant.name}</div>
-                                        <div className="product-description">{plant.description}</div>
-                                        <div className="product-price">{plant.cost}</div>
-                                        <button 
-                                            className="product-button" 
-                                            onClick={() => handleAddToCart(plant)}
-                                        >
-                                            Add to Cart
-                                        </button>
-                                    </div>
-                                ))}
+                                {category.plants.map((plant, plantIndex) => {
+                                    const isInCart = cartItems.some(item => item.name === plant.name);
+                                    return (
+                                        <div key={plantIndex} className="product-card">
+                                            <img 
+                                                className="product-image" 
+                                                src={plant.image} 
+                                                alt={plant.name}
+                                                onError={(e) => {
+                                                    e.target.src = 'https://via.placeholder.com/200x200/4CAF50/FFFFFF?text=Plant+Image';
+                                                }}
+                                            />
+                                            <div className="product-title">{plant.name}</div>
+                                            <div className="product-description">{plant.description}</div>
+                                            <div className="product-price">{plant.cost}</div>
+                                            <button 
+                                                className={`product-button ${isInCart ? 'disabled' : ''}`}
+                                                onClick={() => handleAddToCart(plant)}
+                                                disabled={isInCart}
+                                            >
+                                                {isInCart ? 'In Cart' : 'Add to Cart'}
+                                            </button>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     ))}
